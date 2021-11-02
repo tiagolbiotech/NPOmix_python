@@ -1,5 +1,5 @@
 # Python-only version for:
-## NPOmix v1.0 - https://github.com/tiagolbiotech/NPOmix
+## NPOmix v1.0 - https://github.com/tiagolbiotech/NPOmix (jupyter notebooks)
 
 ### A supervised fingerprint-based strategy to connect natural product mass spectrometry fragmentation data to their biosynthetic gene clusters
 
