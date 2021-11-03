@@ -51,44 +51,9 @@ Round 4 - 10 filtered GCF-MS/MS links (7 correct links)
 Round 5 - 5 additional filtered GCF-MS/MS links (15 total links, 10 correct links)
 ```
 
-## How to reproduce the NPOmix v1.0 analysis?
-
-```
-1) Run notebook 1 to download the set of 1,040 samples required to build the NPOmix database (if you have difficulties to download the files, please contact us);
-
-2) Run notebook 3 up to the topic 3.7 to create the BGC fingerprints (training set) and to select the MGF files (folder named NPOmix_mgf_spectra);
-
-3) Run notebook 2 to create MS/MS fingerprints (testing set);
-
-4) Continue running notebook 3 (from topic 3.8 until the end) to finish the KNN analysis, obtaining the GCF candidates for each MS/MS in the testing set.
-```
-
 ## How to run your samples on the NPOmix v1.0 analysis?
 
-```
-1) Run notebook 1 to download the set of 1,040 samples required to build the NPOmix database (if you have difficulties to download the files, please contact us);
-
-2) Using MzMine2, select the MGF spectra to be tested (place them at the folder named NPOmix_mgf_spectra);
-   Tutorial to select MGF spectra from mzXML/mzML files: https://www.youtube.com/watch?v=MwdJ6mVkdJY
-
-3) Run notebook 2 to create MS/MS fingerprints (testing set);
-
-4) Run notebook 3 (skipping the topic 3.7) to create the BGC fingerprints (training set) and to finish the KNN analysis, obtaining the GCF candidates for each MS/MS in the testing set.
-```
-
-## Submit your samples for collaboration
-
-In case the tool is challenging to run, please submit your project in the contact option below and we will run your samples the soonest we can. We hope that positive results will lead to good and fruitful collaborations. Please insert a brief description of your project and samples in the message box at the link below. Once we reply your message, you can share the necessary files via email.
-
-```
-Necessary files:
-
-1) FASTA genome file(s) named with NCBI ID (example, "GCA_001767235.fasta");
- 
-2) LC-MS/MS file(s) (one or multiple) in the mzML or mzXML format (example, "GCA_001767235.mzML.1","GCA_001767235.mzML.2" and so on);
- 
-3) MGF file from MzMine2 (video workshop here) with selected peaks (and their MS/MS spectra). For now, we are only accepting up to 500 MS/MS spectra.
-```
+`HERE: VIDEO EXPLANATION TO RUN TOOL`
 
 ## Contact
 
