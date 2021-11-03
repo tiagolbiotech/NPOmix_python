@@ -232,6 +232,11 @@ def get_bigscape_df(ena_df_file,input_bigscape_net):
     bigscape_df["Raw_distance"] = 1-bigscape_df["Raw_distance"]
     return bigscape_df,bigscape_dict
 
+def save_bigscape_dict(bigscape_dict,results_folder):
+    w = csv.writer(open("%sbigscape_dict-NPOmix1.0_main-TFL211102.txt"%results_folder, "w"))
+    for key, val in bigscape_dict.items():
+        w.writerow([key, val])
+
 ### renaming bigscape dataframe and bigscape dictionary
 
 def parse_gbk_list(folder_list):
@@ -286,7 +291,7 @@ def rename_bigscape_df(antismash_folder,bigscape_df,bigscape_dict):
     bigscape_df['Clustername_2'] = new_col2
     return bigscape_df,bigscape_dict2
 
-def save_bigscape_dict(bigscape_dict2,results_folder):
+def save_bigscape_dict2(bigscape_dict2,results_folder):
     w = csv.writer(open("%sbigscape_dict2-NPOmix1.0_main-TFL211102.txt"%results_folder, "w"))
     for key, val in bigscape_dict2.items():
         w.writerow([key, val])
@@ -442,7 +447,8 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
     merged_ispec_mat = renaming_merged_ispec_mat(ena_df_file,merged_ispec_mat)
     bigscape_df,bigscape_dict = get_bigscape_df(ena_df_file,input_bigscape_net)
     bigscape_df,bigscape_dict2 = rename_bigscape_df(antismash_folder,bigscape_df,bigscape_dict)
-    save_bigscape_dict(bigscape_dict2,results_folder)
+    save_bigscape_dict(bigscape_dict,results_folder)
+    save_bigscape_dict2(bigscape_dict2,results_folder)
     strain_list,bgcs_list = get_strain_list(bigscape_df)
     affinity_df,affinity_bgcs = get_pre_training_df(bigscape_df,bigscape_dict2,strain_list,bgcs_list)
     affinity_df = renaming_affinity_df(affinity_df)
