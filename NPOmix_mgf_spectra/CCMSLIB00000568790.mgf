@@ -1,0 +1,36 @@
+BEGIN IONS
+PEPMASS=723.469
+CHARGE=1+
+COMPOUNDNAME=MoNA:947090 2-{6-[(2-{5`-[6-hydroxy-6-(hydroxymethyl)-3,5-dimethyltetrahydro-2h-pyran-2-yl]-2,3`-dimethyloctahydro-2,2`-bifuran-5-yl}-9-methoxy-2,4,10-trimethyl-1,6-dioxaspiro[4.5]dec-7-yl)methyl]-3-methyltetrahydro-2h-pyran-2-yl}propanoic acid
+LIBRARYQUALITY=3
+SMILES=N/A
+INCHIKEY=DANUORFCFTYTSZ-UHFFFAOYSA-N
+INCHI=InChI=1S/C40H68O11/c1-21-11-12-28(46-33(21)26(6)36(42)43)17-29-18-30(45-10)27(7)40(48-29)25(5)19-38(9,51-40)32-13-14-37(8,49-32)35-23(3)16-31(47-35)34-22(2)15-24(4)39(44,20-41)50-34/h21-35,41,44H,11-20H2,1-10H3,(H,42,43)
+MSLEVEL=2
+SOURCE_INSTRUMENT=LC-ESI-QFT-LC-ESI-QFT
+FILENAME=output_mgf.mgf
+SEQ=*..*
+IONMODE=
+ORGANISM=MONA
+NAME=MoNA:947090 2-{6-[(2-{5`-[6-hydroxy-6-(hydroxymethyl)-3,5-dimethyltetrahydro-2h-pyran-2-yl]-2,3`-dimethyloctahydro-2,2`-bifuran-5-yl}-9-methoxy-2,4,10-trimethyl-1,6-dioxaspiro[4.5]dec-7-yl)methyl]-3-methyltetrahydro-2h-pyran-2-yl}propanoic acid [M-H]-
+PI=MoNA
+DATACOLLECTOR=MoNA
+PUBMED=N/A
+SUBMITUSER=mwang87
+TAGS=
+SPECTRUMID=CCMSLIB00000568790
+SCANS=6041
+55.0189 98.92541 
+57.0346 100.0 
+58.006 5.499192 
+59.0138 8.426603 
+61.9884 5.810176 
+65.0396 5.887922 
+67.0189 18.719883 
+69.0346 7.75383 
+93.0346 9.904549 
+95.0503 7.308906 
+109.0658 7.173428 
+121.0659 6.12347 
+END IONS
+
