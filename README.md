@@ -1,5 +1,5 @@
 # Python-only version for:
-## NPOmix v1.0 - 
+## NPOmix v1.0 - Beta
 
 ## For jupyter notebooks: https://github.com/tiagolbiotech/NPOmix
 
