@@ -21,12 +21,12 @@ from sklearn.metrics import jaccard_score
 
 ### inputs
 
-mgf_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/NPOmix_mgf_spectra/" # this folder needs to contain all mgf files (MS/MS data) to be tested
+mgf_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/gerwick_mgf_spectra/" # this folder needs to contain all mgf files (MS/MS data) to be tested
 LCMS_folder = "/Volumes/TFL210426/podp_LCMS_round5/" # this folder needs to contain all mz(X)ML files in the training set
 ena_df_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/ena_dict-210315.csv" # this file contains the correspondance between ENA codes
 input_bigscape_net = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/bigscape_all_c030.txt" # this file contains the BiG-SCAPE scores for all BGCs from the 1,040 genomes
 antismash_folder = "/Volumes/TFL210426/ming_output_round4/antismash/" # this folder needs to contain all antismash files (annotated genomes) to be used in the training set
-merged_ispec_mat_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix/outputs/mass-affinity_df-NPOmix1.0-TFL210811.txt" # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
+merged_ispec_mat_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/mass-affinity_df-NPOmix1.0-TFL210811.txt" # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
 results_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/main_code_results/" # folder where the results will be saved
 
 if not os.path.isdir(results_folder):
