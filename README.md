@@ -55,6 +55,10 @@ Round 5 - 5 additional filtered GCF-MS/MS links (15 total links, 10 correct link
 
 https://user-images.githubusercontent.com/12102722/140235867-69da020c-901e-4fd1-8825-59ee96c46a18.mp4
 
+For reproducing results from the [referenced paper](https://www.biorxiv.org/content/10.1101/2021.10.05.463235v1), download 
+1) `LCMS_folder`: get LC-MS/MS files found in ftp_download_links.txt and rename then according to the names at the folder below 
+2) `antismash_folder`: download the antiSMASH files [using this Zenodo link]()
+
 ## Contact
 
 If you have difficulties to run the NPOmix tool for your set of samples or if you have questions, please contact me in the link below. The ideal set of samples would be samples slightly rare but present in our current database of 1,040 samples and these samples should be similar to each other.
