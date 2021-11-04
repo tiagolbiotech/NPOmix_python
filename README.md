@@ -51,9 +51,9 @@ Round 4 - 10 filtered GCF-MS/MS links (7 correct links)
 Round 5 - 5 additional filtered GCF-MS/MS links (15 total links, 10 correct links)
 ```
 
-## How to run your samples on the NPOmix v1.0 analysis?
+## How to run your samples on the NPOmix v1.0 analysis (video explanation)?
 
-`HERE: VIDEO EXPLANATION TO RUN TOOL`
+https://user-images.githubusercontent.com/12102722/140235867-69da020c-901e-4fd1-8825-59ee96c46a18.mp4
 
 ## Contact
 
