@@ -416,9 +416,26 @@ def get_binary(fingerprint):
             new_row.append(0)
     fingerprint = new_row
     return fingerprint
+
+def count_list(test_list,k):
+    count = 0
+    for i in test_list:
+        if i > k:
+            count += 1
+    return count
+
+def get_ms2_metadata(ccms_id):
+    with mgf.MGF('%s%s.mgf'%(mgf_folder,ccms_id)) as reader:
+        for spectrum in reader:
+            for key in spectrum.keys():
+                if key == 'intensity array':
+                    peak_count = count_list(spectrum[key],10000)
+                if key == 'params':
+                    pepmass = spectrum[key]['pepmass'][0]
+            return pepmass,peak_count
     
 def get_final_df(training_df,testing_df,neighbors_array,results_folder):
-    final_df = pd.DataFrame(columns=('metabolite_ID','predicted_GCFs','max_jaccard'))
+    final_df = pd.DataFrame(columns=('metabolite_ID','predicted_GCFs','max_jaccard','pep_mass','peak_count'))
     for i,ccms_id in enumerate(testing_df.index):
         jaccard_scores = []
         for j in range(0,len(neighbors_array[i])):
@@ -430,7 +447,8 @@ def get_final_df(training_df,testing_df,neighbors_array,results_folder):
             ms_binary = get_binary(ms_fp)
             jaccard_scores.append(jaccard_score(bgc_binary,ms_binary))
         max_jaccard = round(max(jaccard_scores),2)
-        final_df.loc[i] = ccms_id,neighbors_array[i],max_jaccard
+        pepmass,peak_count = get_ms2_metadata(ccms_id)
+        final_df.loc[i] = ccms_id,neighbors_array[i],max_jaccard,pepmass,peak_count
     final_df.to_csv("%sfinal_df-NPOmix1.0_main-TFL211102.txt"%results_folder,sep="\t",index_label=False)
     return final_df
 
