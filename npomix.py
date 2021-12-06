@@ -14,6 +14,7 @@ import re
 import networkx
 from networkx.algorithms.components.connected import connected_components
 from collections import defaultdict
+import pickle
 from Bio import SeqIO
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import NearestNeighbors
@@ -26,7 +27,7 @@ LCMS_folder = "/Volumes/TFL210426/podp_LCMS_round5/" # this folder needs to cont
 ena_df_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/ena_dict-210315.csv" # this file contains the correspondance between ENA codes
 input_bigscape_net = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/bigscape_all_c030.txt" # this file contains the BiG-SCAPE scores for all BGCs from the 1,040 genomes
 antismash_folder = "/Volumes/TFL210426/ming_output_round4/antismash/" # this folder needs to contain all antismash files (annotated genomes) to be used in the training set
-merged_ispec_mat_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/mass-affinity_df-NPOmix1.0_validation-TFL210811.txt" # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
+merged_ispec_mat_file = "mass-affinity_df-NPOmix1.0_validation-TFL210811.txt" # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
 results_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/main_code_results/" # folder where the results will be saved
 
 if not os.path.isdir(results_folder):
@@ -366,7 +367,7 @@ def get_networked_cols(merged_ispec_mat,affinity_df):
             networked_cols.append(item)
     return networked_cols
 
-def get_training_df(affinity_df,networked_cols,results_folder):
+def get_training_df(affinity_df,networked_cols,results_folder,affinity_bgcs):
     training_df = affinity_df[networked_cols]
     label_col = affinity_df['label']
     training_df = training_df[(training_df.T != 0).any()]
@@ -376,9 +377,15 @@ def get_training_df(affinity_df,networked_cols,results_folder):
             filt_label_col.append(item)
     training_df['label'] = filt_label_col
     training_df = training_df.sort_index(axis=1)
+    training_bgcs = []
+    count = 0
+    for item in affinity_bgcs:
+        if count in training_df.index:
+            training_bgcs.append(item)
+        count += 1
     training_df = training_df.reset_index(drop=True)
     training_df.to_csv("%straining_df-NPOmix1.0_main-TFL211102.txt"%results_folder,sep="\t",index_label=False)
-    return training_df
+    return training_df,training_bgcs
 
 ### obtaining testing dataframe
 
@@ -456,12 +463,12 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
     start = time.time()
     libnames = pd.DataFrame(get_library('all'))
     fmgf,speclist = select_mgf(mgf_folder)
-    if os.path.isfile(merged_ispec_mat_file):
-        merged_ispec_mat = pd.read_csv(merged_ispec_mat_file, sep='\t')
+    if os.path.isfile("%s%s"%(results_folder,merged_ispec_mat_file)):
+        merged_ispec_mat = pd.read_csv("%s%s"%(results_folder,merged_ispec_mat_file), sep='\t')
     else:
         ispec_mat = get_ispec_mat(speclist,LCMS_folder,fmgf)
         merged_ispec_mat = get_merged_ispec_mat(ispec_mat)
-        merged_ispec_mat.to_csv("%smass-affinity_df-NPOmix1.0_main-TFL211102.txt"%results_folder,sep="\t",index_label=False)
+        merged_ispec_mat.to_csv("%s%s"%(results_folder,merged_ispec_mat_file),sep="\t",index_label=False)
     merged_ispec_mat = renaming_merged_ispec_mat(ena_df_file,merged_ispec_mat)
     bigscape_df,bigscape_dict = get_bigscape_df(ena_df_file,input_bigscape_net)
     bigscape_df,bigscape_dict2 = rename_bigscape_df(antismash_folder,bigscape_df,bigscape_dict)
@@ -471,7 +478,8 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
     affinity_df,affinity_bgcs = get_pre_training_df(bigscape_df,bigscape_dict2,strain_list,bgcs_list)
     affinity_df = renaming_affinity_df(affinity_df)
     networked_cols = get_networked_cols(merged_ispec_mat,affinity_df)
-    training_df = get_training_df(affinity_df,networked_cols,results_folder)
+    training_df,training_bgcs = get_training_df(affinity_df,networked_cols,results_folder,affinity_bgcs)
+    pickle.dump( training_bgcs, open( "%svalidation1_bgcs-round5-TFL21104.txt"%results_folder, "wb" ) )
     testing_df = get_testing_df(merged_ispec_mat,networked_cols,results_folder)
     neighbors_array = running_knn(training_df,testing_df)
     final_df = get_final_df(training_df,testing_df,neighbors_array,results_folder)
