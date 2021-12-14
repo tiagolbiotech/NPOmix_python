@@ -229,8 +229,6 @@ def main_get_families(input_file):
     return bigscape_df,gcf_dict
 
 def get_bigscape_df(ena_df_file,input_bigscape_net):
-    ena_df = pd.read_csv(ena_df_file,sep=',',names=['ERR_code','ERXS_code'])
-    ena_dict = dict(zip(ena_df['ERXS_code'],ena_df['ERR_code']))
     bigscape_df,bigscape_dict = main_get_families(input_bigscape_net)
     bigscape_df["Raw_distance"] = 1-bigscape_df["Raw_distance"]
     return bigscape_df,bigscape_dict
