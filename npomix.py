@@ -27,7 +27,7 @@ LCMS_folder = "/Volumes/TFL210426/podp_LCMS_round5/" # this folder needs to cont
 ena_df_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/ena_dict-210315.csv" # this file contains the correspondance between ENA codes
 input_bigscape_net = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/bigscape_all_c030.txt" # this file contains the BiG-SCAPE scores for all BGCs from the 1,040 genomes
 antismash_folder = "/Volumes/TFL210426/ming_output_round4/antismash/" # this folder needs to contain all antismash files (annotated genomes) to be used in the training set
-merged_ispec_mat_file = "mass-affinity_df-NPOmix1.0_validation-TFL210811.txt" # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
+merged_ispec_mat_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/mass-affinity_df-NPOmix1.0_validation-TFL210811.txt" # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
 results_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/main_code_results/" # folder where the results will be saved
 
 if not os.path.isdir(results_folder):
@@ -463,12 +463,12 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
     start = time.time()
     libnames = pd.DataFrame(get_library('all'))
     fmgf,speclist = select_mgf(mgf_folder)
-    if os.path.isfile("%s%s"%(results_folder,merged_ispec_mat_file)):
-        merged_ispec_mat = pd.read_csv("%s%s"%(results_folder,merged_ispec_mat_file), sep='\t')
+    if os.path.isfile(merged_ispec_mat_file):
+        merged_ispec_mat = pd.read_csv(merged_ispec_mat_file, sep='\t')
     else:
         ispec_mat = get_ispec_mat(speclist,LCMS_folder,fmgf)
         merged_ispec_mat = get_merged_ispec_mat(ispec_mat)
-        merged_ispec_mat.to_csv("%s%s"%(results_folder,merged_ispec_mat_file),sep="\t",index_label=False)
+        merged_ispec_mat.to_csv(merged_ispec_mat_file,sep="\t",index_label=False)
     merged_ispec_mat = renaming_merged_ispec_mat(ena_df_file,merged_ispec_mat)
     bigscape_df,bigscape_dict = get_bigscape_df(ena_df_file,input_bigscape_net)
     bigscape_df,bigscape_dict2 = rename_bigscape_df(antismash_folder,bigscape_df,bigscape_dict)
