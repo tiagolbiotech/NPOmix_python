@@ -14,7 +14,7 @@ import re
 import networkx
 from networkx.algorithms.components.connected import connected_components
 from collections import defaultdict
-import pickle
+from datetime import datetime
 from Bio import SeqIO
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import NearestNeighbors
@@ -32,6 +32,8 @@ results_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/main_
 
 if not os.path.isdir(results_folder):
     os.mkdir(results_folder)
+
+current_date = datetime.today().strftime('%Y%m%d')
     
 ### Obtaining library names
 
@@ -234,7 +236,7 @@ def get_bigscape_df(ena_df_file,input_bigscape_net):
     return bigscape_df,bigscape_dict
 
 def save_bigscape_dict(bigscape_dict,results_folder):
-    w = csv.writer(open("%sbigscape_dict-NPOmix1.0_main-TFL211102.txt"%results_folder, "w"))
+    w = csv.writer(open("%sbigscape_dict-NPOmix1.0-%s.txt"%(results_folder,current_date), "w"))
     for key, val in bigscape_dict.items():
         w.writerow([key, val])
 
@@ -293,7 +295,7 @@ def rename_bigscape_df(antismash_folder,bigscape_df,bigscape_dict):
     return bigscape_df,bigscape_dict2
 
 def save_bigscape_dict2(bigscape_dict2,results_folder):
-    w = csv.writer(open("%sbigscape_dict2-NPOmix1.0_main-TFL211102.txt"%results_folder, "w"))
+    w = csv.writer(open("%sbigscape_dict2-NPOmix1.0-%s.txt"%(results_folder,current_date), "w"))
     for key, val in bigscape_dict2.items():
         w.writerow([key, val])
         
@@ -384,7 +386,7 @@ def get_training_df(affinity_df,networked_cols,results_folder,affinity_bgcs):
             training_bgcs.append(item)
         count += 1
     training_df = training_df.reset_index(drop=True)
-    training_df.to_csv("%straining_df-NPOmix1.0_main-TFL211102.txt"%results_folder,sep="\t",index_label=False)
+    training_df.to_csv("%straining_df-NPOmix1.0-%s.txt"%(results_folder,current_date),sep="\t",index_label=False)
     return training_df,training_bgcs
 
 ### obtaining testing dataframe
@@ -394,7 +396,7 @@ def get_testing_df(merged_ispec_mat,networked_cols,results_folder):
     testing_df = testing_df.sort_index(axis=1)
     testing_df = testing_df[testing_df > 0.7].replace(np.nan,0)
     testing_df = testing_df[(testing_df.T != 0).any()]
-    testing_df.to_csv("%stesting_df-NPOmix1.0_main-TFL211102.txt"%results_folder,sep="\t",index_label=False)
+    testing_df.to_csv("%stesting_df-NPOmix1.0-%s.txt"%(results_folder,current_date),sep="\t",index_label=False)
     return testing_df
 
 ### running machine learning k-nearest neighbors and obtaining final output
@@ -456,7 +458,7 @@ def get_final_df(training_df,testing_df,neighbors_array,results_folder):
         max_jaccard = round(max(jaccard_scores),2)
         pepmass,peak_count = get_ms2_metadata(ccms_id)
         final_df.loc[i] = ccms_id,neighbors_array[i],max_jaccard,pepmass,peak_count
-    final_df.to_csv("%sfinal_df-NPOmix1.0_main-TFL211102.txt"%results_folder,sep="\t",index_label=False)
+    final_df.to_csv("%sfinal_df-NPOmix1.0-%s.txt"%(results_folder,current_date),sep="\t",index_label=False)
     return final_df
 
 def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigscape_net,antismash_folder,results_folder):
@@ -479,7 +481,8 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
     affinity_df = renaming_affinity_df(affinity_df)
     networked_cols = get_networked_cols(merged_ispec_mat,affinity_df)
     training_df,training_bgcs = get_training_df(affinity_df,networked_cols,results_folder,affinity_bgcs)
-    pickle.dump( training_bgcs, open( "%svalidation1_bgcs-round5-TFL21104.txt"%results_folder, "wb" ) )
+    bgcs_df = pd.DataFrame(training_bgcs, columns=['bgcs'])
+    bgcs_df.to_csv("%sbgc_list-NPOmix1.0-%s.txt"%(results_folder,current_date),sep='\t')
     testing_df = get_testing_df(merged_ispec_mat,networked_cols,results_folder)
     neighbors_array = running_knn(training_df,testing_df)
     final_df = get_final_df(training_df,testing_df,neighbors_array,results_folder)
