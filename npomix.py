@@ -84,15 +84,6 @@ def get_ms2df(file_name, speclist, pmztol=0.1, fragtol=0.1):
             })
     return ms2_data
 
-def get_library(lib, peaks=False):
-    base_url = "gnps.ucsd.edu"
-    if peaks:
-        datasets_url = 'https://' + base_url + '/ProteoSAFe/LibraryServlet?library=' + lib + '&showpeaks=true'
-    else:
-        datasets_url = 'https://' + base_url + '/ProteoSAFe/LibraryServlet?library=' + lib
-    json_obj = json.loads(requests.get(datasets_url).text)
-    return json_obj['spectra']
-
 ### Creating a list of reference spectra from mgf files stored in their specified directory
 
 def select_mgf(mgf_folder):
@@ -461,7 +452,6 @@ def get_final_df(training_df,testing_df,neighbors_array,results_folder):
 
 def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigscape_net,antismash_folder,results_folder):
     start = time.time()
-    libnames = pd.DataFrame(get_library('all'))
     fmgf,speclist = select_mgf(mgf_folder)
     if os.path.isfile(merged_ispec_mat_file):
         merged_ispec_mat = pd.read_csv(merged_ispec_mat_file, sep='\t')
