@@ -35,7 +35,7 @@ if not os.path.isdir(results_folder):
 
 current_date = datetime.today().strftime('%Y%m%d')
     
-### Obtaining library names
+### Obtaining MS2 data
 
 def get_ms2df(file_name, speclist, pmztol=0.1, fragtol=0.1):
     rt = []
