@@ -433,7 +433,7 @@ def get_ms2_metadata(ccms_id):
             return pepmass,peak_count
     
 def get_final_df(training_df,testing_df,neighbors_array,results_folder):
-    final_df = pd.DataFrame(columns=('metabolite_ID','predicted_GCFs','max_jaccard','pep_mass','peak_count'))
+    final_df = pd.DataFrame(columns=('metabolite_ID','predicted_GCFs','max_jaccard','parent_mass','peak_count'))
     for i,ccms_id in enumerate(testing_df.index):
         jaccard_scores = []
         for j in range(0,len(neighbors_array[i])):
