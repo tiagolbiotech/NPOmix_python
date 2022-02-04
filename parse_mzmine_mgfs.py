@@ -1,12 +1,16 @@
 from pyteomics import mgf
 import sys
 
+### example of usage: python parse_mzmine_mgfs.py ~/Dropbox/workshop-FEB2022/mzmine_files/PoDP_div_genomes-TFL210409.mgf \
+# ~/Dropbox/workshop-FEB2022/mzmine_files/ ~/Dropbox/workshop-FEB2022/NPOmix_python/gnps_names_list-220116.txt 300
+
 input_file = sys.argv[1]
 output_folder = sys.argv[2]
-mass_limit = sys.argv[3]
+gnps_names_file= sys.argv[3]
+mass_limit = sys.argv[4]
 
 ccms_list = []
-infile = open('/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/gnps_names_list-220116.txt','r')
+infile = open(gnps_names_file,'r')
 for line in infile:
     ccms_list.append(line.rstrip('\n'))
     
