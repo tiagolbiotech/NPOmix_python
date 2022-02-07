@@ -55,9 +55,8 @@ Round 5 - 5 additional filtered GCF-MS/MS links (15 total links, 10 correct link
 
 https://user-images.githubusercontent.com/12102722/140235867-69da020c-901e-4fd1-8825-59ee96c46a18.mp4
 
-## Contact
+## Submit your samples
 
-If you have difficulties to run the NPOmix tool for your set of samples or if you have questions, please contact me in the link below. The ideal set of samples would be samples slightly rare but present in our current database of 1,040 samples and these samples should be similar to each other.
-```
-https://www.tfleao.com/contact-me
-```
+If you have difficulties to run the NPOmix tool for your set of samples or if you have questions, please submit your samples in the link below.
+
+https://www.tfleao.com/general-8
