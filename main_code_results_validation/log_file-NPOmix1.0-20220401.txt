@@ -1,0 +1,12 @@
+	parameter	values
+0	date	02-04-2022
+1	run_time	05:16:23.78
+2	start	21:18:24
+3	end	02:34:48
+4	mgf_folder	/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/NPOmix_mgf_spectra/
+5	LCMS_folder	/Volumes/TFL210426/podp_LCMS_round5/
+6	BiG-SCAPE_input	/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/bigscape_all_c030.txt
+7	antismash_folder	/Volumes/TFL210426/ming_output_round4/antismash/
+8	mass_affinities	/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/mass-affinity_df-NPOmix1.0_validation-20220401.txt
+9	results_folder	/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/main_code_results_validation/
+10	k_value	3

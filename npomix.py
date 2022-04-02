@@ -22,18 +22,20 @@ from sklearn.metrics import jaccard_score
 
 ### inputs
 
+current_date = datetime.today().strftime('%Y%m%d')
 mgf_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/NPOmix_mgf_spectra/" # this folder needs to contain all mgf files (MS/MS data) to be tested
 LCMS_folder = "/Volumes/TFL210426/podp_LCMS_round5/" # this folder needs to contain all mz(X)ML files in the training set
 ena_df_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/ena_dict-210315.csv" # this file contains the correspondance between ENA codes
 input_bigscape_net = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/bigscape_all_c030.txt" # this file contains the BiG-SCAPE scores for all BGCs from the 1,040 genomes
 antismash_folder = "/Volumes/TFL210426/ming_output_round4/antismash/" # this folder needs to contain all antismash files (annotated genomes) to be used in the training set
-merged_ispec_mat_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/mass-affinity_df-NPOmix1.0_validation-TFL210811.txt" # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
-results_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/main_code_results/" # folder where the results will be saved
+merged_ispec_mat_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/mass-affinity_df-NPOmix1.0_validation-%s.txt"%current_date # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
+results_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/main_code_results_validation/" # folder where the results will be saved
+k_value = 3
 
 if not os.path.isdir(results_folder):
     os.mkdir(results_folder)
 
-current_date = datetime.today().strftime('%Y%m%d')
+start_time = datetime.now().strftime("%H:%M:%S")
     
 ### Obtaining MS2 data
 
@@ -104,13 +106,17 @@ def select_mgf(mgf_folder):
 def get_mxlist(speclist,LCMS_folder):
     dirlist = glob.glob('%s*'%LCMS_folder)
     mxlist,excluded_list = [],[]
+    count = 1
     for dr in dirlist:
-        print(dr)
+        print('%s,%s'%(count,[dr]))
+        start_temp1 = time.time()
+        count += 1
         try:
             ms2_data = get_ms2df(dr, speclist)
             mxlist.append(ms2_data.loc[ms2_data.groupby(['scan_num'])['scores'].idxmax()])
         except:
             excluded_list.append(dr)
+        print("--- %s seconds ---" % (time.time() - start_temp1))
     return mxlist,excluded_list
 
 def get_filt_specn(speclist,LCMS_folder,fmgf):
@@ -393,13 +399,13 @@ def get_testing_df(merged_ispec_mat,networked_cols,results_folder):
 def running_knn(training_df,testing_df):
     X_div = training_df.drop("label", axis=1)
     y_div = training_df["label"]
-    nbrs = NearestNeighbors(n_neighbors=3, algorithm='ball_tree').fit(X_div,y_div)
+    nbrs = NearestNeighbors(n_neighbors=k_value, algorithm='ball_tree').fit(X_div,y_div)
     distances, indices = nbrs.kneighbors(testing_df)
     y_div = y_div.reset_index(drop=True)
     neighbors_array = []
     for item in indices:
         candidate_list = []
-        for i in range(3):
+        for i in range(k_value):
             candidate_list.append(y_div[item[i]])
         neighbors_array.append(candidate_list)
     neighbors_array = np.asarray(neighbors_array)
@@ -452,7 +458,9 @@ def get_final_df(training_df,testing_df,neighbors_array,results_folder):
 
 def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigscape_net,antismash_folder,results_folder):
     start = time.time()
+    print('Parsing %s MGF files and %s LC-MS/MS files'%(len(glob.glob('%s*'%mgf_folder)),len(glob.glob('%s*'%LCMS_folder))))
     fmgf,speclist = select_mgf(mgf_folder)
+    print('Comparing all MGFs versus all LC-MS/MS files to create the testing matrix')
     if os.path.isfile(merged_ispec_mat_file):
         merged_ispec_mat = pd.read_csv(merged_ispec_mat_file, sep='\t')
     else:
@@ -460,11 +468,14 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
         merged_ispec_mat = get_merged_ispec_mat(ispec_mat)
         merged_ispec_mat.to_csv(merged_ispec_mat_file,sep="\t",index_label=False)
     merged_ispec_mat = renaming_merged_ispec_mat(ena_df_file,merged_ispec_mat)
+    print('Obtaining BiG-SCAPE dataframe and BiG-SCAPE dictionary')
     bigscape_df,bigscape_dict = get_bigscape_df(ena_df_file,input_bigscape_net)
     bigscape_df,bigscape_dict2 = rename_bigscape_df(antismash_folder,bigscape_df,bigscape_dict)
     save_bigscape_dict(bigscape_dict,results_folder)
     save_bigscape_dict2(bigscape_dict2,results_folder)
+    print('BiG-SCAPE create with %s GCFs'%len(bigscape_dict))
     strain_list,bgcs_list = get_strain_list(bigscape_df)
+    print('Creating traning dataframe')
     affinity_df,affinity_bgcs = get_pre_training_df(bigscape_df,bigscape_dict2,strain_list,bgcs_list)
     affinity_df = renaming_affinity_df(affinity_df)
     networked_cols = get_networked_cols(merged_ispec_mat,affinity_df)
@@ -472,11 +483,36 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
     bgcs_df = pd.DataFrame(training_bgcs, columns=['bgcs'])
     bgcs_df.to_csv("%sbgc_list-NPOmix1.0-%s.txt"%(results_folder,current_date),sep='\t')
     testing_df = get_testing_df(merged_ispec_mat,networked_cols,results_folder)
+    print('Running KNN using k equals to %s'%k_value)
     neighbors_array = running_knn(training_df,testing_df)
+    print('Creating final dataframe')
     final_df = get_final_df(training_df,testing_df,neighbors_array,results_folder)
     end = time.time()
     hours, rem = divmod(end-start, 3600)
     minutes, seconds = divmod(rem, 60)
-    print("{:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
+    run_time = "{:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds)
+    return run_time
 
-run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigscape_net,antismash_folder,results_folder)
+run_time = run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigscape_net,antismash_folder,results_folder)
+
+log_list1 = ['date','run_time','start','end','mgf_folder','LCMS_folder','BiG-SCAPE_input','antismash_folder','mass_affinities','results_folder','k_value']
+
+end_time = datetime.now().strftime("%H:%M:%S")
+log_date = datetime.today().strftime('%d-%m-%Y')
+
+log_list2 = [log_date,
+run_time,
+start_time,
+end_time,
+mgf_folder,
+LCMS_folder,
+input_bigscape_net,
+antismash_folder,
+merged_ispec_mat_file,
+results_folder,
+k_value]
+
+log_df = pd.DataFrame.from_dict({'parameter':log_list1,'values':log_list2})
+log_df.to_csv("%slog_file-NPOmix1.0-%s.txt"%(results_folder,current_date),sep='\t')
+
+print(run_time)
