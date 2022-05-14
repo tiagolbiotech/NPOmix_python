@@ -2,12 +2,14 @@ from pyteomics import mgf
 import sys
 
 ### example of usage: python parse_mzmine_mgfs.py ~/Dropbox/workshop-FEB2022/mzmine_files/PoDP_div_genomes-TFL210409.mgf \
-# ~/Dropbox/workshop-FEB2022/mzmine_files/ ~/Dropbox/workshop-FEB2022/NPOmix_python/gnps_names_list-220116.txt 300
+# ~/Dropbox/workshop-FEB2022/mzmine_files/ ~/Dropbox/workshop-FEB2022/NPOmix_python/gnps_names_list-220116.txt 300 800
 
 input_file = sys.argv[1]
 output_folder = sys.argv[2]
 gnps_names_file= sys.argv[3]
-mass_limit = sys.argv[4]
+lower_mass_limit = sys.argv[4]
+upper_mass_limit = sys.argv[5]
+
 
 ccms_list = []
 infile = open(gnps_names_file,'r')
@@ -20,7 +22,7 @@ with mgf.MGF(input_file) as reader:
     for spectrum in reader:
         for key in spectrum.keys():
             if key == 'params':
-                if spectrum[key]['pepmass'][0] > float(mass_limit):
+                if spectrum[key]['pepmass'][0] >= float(lower_mass_limit) and spectrum[key]['pepmass'][0] <= float(upper_mass_limit):
                     count += 1
                     individual_spec = []
                     individual_spec.append(spectrum)
