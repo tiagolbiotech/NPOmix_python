@@ -3,6 +3,10 @@
 
 ## For jupyter notebooks: https://github.com/tiagolbiotech/NPOmix
 
+## Installation
+
+For installation and running NPOmix and other multi-omics tools, see this notebook: [NPOmix_SI-installation_and_running-220612.ipynb](https://github.com/tiagolbiotech/NPOmix/blob/main/NPOmix_SI-installation_and_running-220612.ipynb)
+
 ### A supervised fingerprint-based strategy to connect natural product mass spectrometry fragmentation data to their biosynthetic gene clusters
 
 Authors: Tiago F. Leao, Mingxun Wang, Ricardo da Silva, Justin J.J. van der Hooft, Anelize Bauermeister, Asker Brejnrod, Evgenia Glukhov, Lena Gerwick, William H. Gerwick, Nuno Bandeira, Pieter C. Dorrestein
