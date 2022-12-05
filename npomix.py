@@ -1,3 +1,4 @@
+import argparse
 from pyteomics import mzxml
 from pyteomics import mgf
 from spectrum_alignment import *
@@ -20,17 +21,42 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics import jaccard_score
 
-### inputs
+
 
 current_date = datetime.today().strftime('%Y%m%d')
-mgf_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/NPOmix_mgf_spectra/" # this folder needs to contain all mgf files (MS/MS data) to be tested
-LCMS_folder = "/Volumes/TFL210426/podp_LCMS_round5/" # this folder needs to contain all mz(X)ML files in the training set
-ena_df_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/ena_dict-210315.csv" # this file contains the correspondance between ENA codes
-input_bigscape_net = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/bigscape_all_c030.txt" # this file contains the BiG-SCAPE scores for all BGCs from the 1,040 genomes
-antismash_folder = "/Volumes/TFL210426/ming_output_round4/antismash/" # this folder needs to contain all antismash files (annotated genomes) to be used in the training set
-merged_ispec_mat_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/mass-affinity_df-NPOmix1.0_validation-%s.txt"%current_date # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
-results_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/main_code_results_validation/" # folder where the results will be saved
+
+### inputs
+
+parser = argparse.ArgumentParser()
+parser.add_argument('mgf_folder')
+parser.add_argument('LCMS_folder')
+parser.add_argument('ena_df_file')
+parser.add_argument('input_bigscape_net')
+parser.add_argument('antismash_folder')
+parser.add_argument('merged_ispec_mat_file')
+parser.add_argument('results_folder')
+
+args = parser.parse_args()
+
+# OLD DEFAULT Values
+# mgf_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/NPOmix_mgf_spectra/" # this folder needs to contain all mgf files (MS/MS data) to be tested
+# LCMS_folder = "/Volumes/TFL210426/podp_LCMS_round5/" # this folder needs to contain all mz(X)ML files in the training set
+# ena_df_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/ena_dict-210315.csv" # this file contains the correspondance between ENA codes
+# input_bigscape_net = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/bigscape_all_c030.txt" # this file contains the BiG-SCAPE scores for all BGCs from the 1,040 genomes
+# antismash_folder = "/Volumes/TFL210426/ming_output_round4/antismash/" # this folder needs to contain all antismash files (annotated genomes) to be used in the training set
+# merged_ispec_mat_file = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/mass-affinity_df-NPOmix1.0_validation-%s.txt"%current_date # (OPTIONAL) if you already ran the step to obtain the merged_ispec_mat, you can skip this time consuming step by inputting this file
+# results_folder = "/Users/tiagoferreiraleao/Dropbox/tiago-NAS/NPOmix_python/main_code_results_validation/" # folder where the results will be saved
+
+mgf_folder = args.mgf_folder
+LCMS_folder = args.LCMS_folder
+ena_df_file = args.ena_df_file
+input_bigscape_net = args.input_bigscape_net
+antismash_folder = args.antismash_folder
+merged_ispec_mat_file = args.merged_ispec_mat_file
+results_folder = args.results_folder
+
 k_value = 3
+
 
 if not os.path.isdir(results_folder):
     os.mkdir(results_folder)
