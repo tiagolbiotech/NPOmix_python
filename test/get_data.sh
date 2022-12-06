@@ -2988,3 +2988,5 @@ wget -O LCMS_Files/GCA_000959505.25.mzML https://massive.ucsd.edu/ProteoSAFe/Dow
 wget -O LCMS_Files/GCA_000959505.26.mzML https://massive.ucsd.edu/ProteoSAFe/DownloadResultFile?file=f.MSV000084945/ccms_peak/Acidified_EA_2/Wildtype_strains/B.dolosa_AU1058/BdAU1058_EA+acid_48_Tri_P1-B-4_01_4985.mzML
 wget -O LCMS_Files/GCA_003568605.25.mzML https://massive.ucsd.edu/ProteoSAFe/DownloadResultFile?file=f.MSV000084945/ccms_peak/Acidified_EA_2/Wildtype_strains/B.thailandensis_E264/BtE264_EA+acid_48_P1-C-1_01_4999.mzML
 wget -O LCMS_Files/GCA_003568605.26.mzML https://massive.ucsd.edu/ProteoSAFe/DownloadResultFile?file=f.MSV000084945/ccms_peak/Acidified_EA_2/Wildtype_strains/B.thailandensis_E264/BtE264_EA+acid_48_Tri_P1-C-2_01_5000.mzML
+wget -O antismash_bgcs.zip https://zenodo.org/record/6637083/files/antismash_only_gbk.zip?download=1
+unzip antismash_bgcs.zip && rm antismash_bgcs.zip
