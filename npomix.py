@@ -422,7 +422,7 @@ def get_testing_df(merged_ispec_mat,networked_cols,results_folder):
 
 ### running machine learning k-nearest neighbors and obtaining final output
 
-def running_knn(training_df,testing_df):
+def running_knn(training_df,testing_df,k_value):
     X_div = training_df.drop("label", axis=1)
     y_div = training_df["label"]
     nbrs = NearestNeighbors(n_neighbors=k_value, algorithm='ball_tree').fit(X_div,y_div)
@@ -501,7 +501,7 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
     save_bigscape_dict2(bigscape_dict2,results_folder)
     print('BiG-SCAPE create with %s GCFs'%len(bigscape_dict))
     strain_list,bgcs_list = get_strain_list(bigscape_df)
-    print('Creating traning dataframe')
+    print('Creating training dataframe')
     affinity_df,affinity_bgcs = get_pre_training_df(bigscape_df,bigscape_dict2,strain_list,bgcs_list)
     affinity_df = renaming_affinity_df(affinity_df)
     networked_cols = get_networked_cols(merged_ispec_mat,affinity_df)
@@ -510,7 +510,7 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
     bgcs_df.to_csv("%sbgc_list-NPOmix1.0-%s.txt"%(results_folder,current_date),sep='\t')
     testing_df = get_testing_df(merged_ispec_mat,networked_cols,results_folder)
     print('Running KNN using k equals to %s'%k_value)
-    neighbors_array = running_knn(training_df,testing_df)
+    neighbors_array = running_knn(training_df,testing_df,k_value)
     print('Creating final dataframe')
     final_df = get_final_df(training_df,testing_df,neighbors_array,results_folder)
     end = time.time()
