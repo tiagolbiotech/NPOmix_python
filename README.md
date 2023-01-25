@@ -1,4 +1,3 @@
-# Python-only version for:
 # NPOmix v1.0
 
 ## Publication:
@@ -17,11 +16,15 @@ DOI: https://doi.org/10.1093/pnasnexus/pgac257
 ```
 [NPOmix PNAS Nexus link](https://academic.oup.com/pnasnexus/article/1/5/pgac257/6847575)
 
+## More information about NPOmix at (including workshops): 
+
+https://www.tfleao.com/npomix1
+
 ## Quick tutorial:
 
 ### Instructions:
 
-**1) Clone the GitHub repository**
+**1) Clone the GitHub repository:**
 ```
 cd path/to/root/folder
 git clone https://github.com/tiagolbiotech/NPOmix_python.git
@@ -36,9 +39,11 @@ unzip antismash_bgcs.zip && rm antismash_bgcs.zip
 **3) Clone the GNPS job with the metabolomes for the strains in the training set and add your files (ideally to G3 group):**
 https://gnps.ucsd.edu/ProteoSAFe/status.jsp?task=cc4bd4de2f184baf9bf6defef4492927
 
-**4) Download GNPS output. Run and download the antiSMASH file. Place the antiSMASH file in the `antismash_gbk_only` folder**
+**4) Download GNPS output. Run and download the antiSMASH file. Place the antiSMASH file in the `antismash_gbk_only` folder.**
 
-**5) Run the dereplication or not dereplication notebooks.**
+**5) Run BiG-SCAPE for the antiSMASH BGCs (including from your samples) and concatenate outputs for all classes.** 
+
+**6) Run the dereplication or not dereplication notebooks. Make sure to adjust the paths for the antiSMASH, GNPS and BiG-SCAPE files.**
 
 ----------------------------------------------------------
 For detailed instructions, please check the video below:
