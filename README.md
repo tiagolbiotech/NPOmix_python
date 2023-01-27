@@ -39,14 +39,31 @@ unzip antismash_bgcs.zip && rm antismash_bgcs.zip
 **3) Clone the GNPS job with the metabolomes for the strains in the training set and add your files (ideally to G3 group):**
 https://gnps.ucsd.edu/ProteoSAFe/status.jsp?task=cc4bd4de2f184baf9bf6defef4492927
 
-**4) Download GNPS output. Run and download the antiSMASH file. Place the antiSMASH file in the `antismash_gbk_only` folder.**
+**4) Download GNPS output. Run and download the [bacterial antiSMASH](https://antismash.secondarymetabolites.org/#!/start) file. Place the antiSMASH file in the `antismash_gbk_only` folder.**
 
-**5) Run BiG-SCAPE for the antiSMASH BGCs (including from your samples) and concatenate outputs for all classes.** 
+**5) Run BiG-SCAPE for the antiSMASH BGCs (including from your samples) and concatenate outputs for all classes.**
+
+```
+A) Download and parse the pFAM database:
+wget http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam35.0/Pfam-A.hmm.gz
+gzip -d Pfam-A.hmm.gz
+hmmpress Pfam-A.hmm
+
+B) Install the BiG-SCAPE software:
+conda create -n bigscape -c bioconda bigscape
+
+C) Run BiG-SCAPE:
+conda activate bigscape
+bigscape.py --pfam_dir /path/to/pfam_files/ -i /path/to/antismash/ \ -o /path/to/bigscape_outputs_220603_1791samples/ -c 8 --include_singletons --mibig
+
+D) Concatenate outputs:
+sh concat_bigscape.sh /path/to/bigscape_output/ 2023-11-11_11-11-11_hybrids_glocal/
+```
 
 **6) Run the dereplication or not dereplication notebooks. Make sure to adjust the paths for the antiSMASH, GNPS and BiG-SCAPE files.**
 
 ----------------------------------------------------------
-For detailed instructions, please check the video below:
+**For detailed instructions, please check the video below:**
 
 https://user-images.githubusercontent.com/12102722/214508959-6eb80a78-a63b-41cb-a8f1-81452f108dc5.mp4
 
