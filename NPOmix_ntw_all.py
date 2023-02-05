@@ -42,7 +42,7 @@ ena_df_file = "/home/andres/Documents/Lab_Actino/UCSD_work/1000_Genomes/NPOmix/N
     #matched MIBiG BGCs with spec lib
 mibig_df = pd.read_csv("/home/andres/Documents/Lab_Actino/UCSD_work/1000_Genomes/NPOmix/NPOmix_python/matched_mibig_gnps_update.tsv",sep='\t')
     #MIBiG 3.1 main product table
-mibig_prod = pd.read_csv("/home/andres/Documents/Lab_Actino/UCSD_work/1000_Genomes/NPOmix/NPOmix_data/MIBiG_products.csv",sep=',') #new
+mibig_prod = pd.read_csv("MIBiG_products.csv",sep=',') #new
 
 #Specify results folder
 results_folder = '/home/andres/Documents/Lab_Actino/UCSD_work/1000_Genomes/NPOmix/NPOmix_data/20230127_notderep_321_edited'
