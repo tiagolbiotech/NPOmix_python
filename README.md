@@ -37,7 +37,7 @@ unzip antismash_bgcs.zip && rm antismash_bgcs.zip
 ```
 
 **3) Clone the GNPS job with the metabolomes for the strains in the training set and add your files (ideally to G3 group):**
-https://gnps.ucsd.edu/ProteoSAFe/status.jsp?task=cc4bd4de2f184baf9bf6defef4492927
+https://gnps.ucsd.edu/ProteoSAFe/status.jsp?task=b915d1f78c364bf4be9900047760d95c
 
 **4) Download GNPS output. Run and download the [bacterial antiSMASH](https://antismash.secondarymetabolites.org/#!/start) file. Place the antiSMASH file in the `antismash_gbk_only` folder.**
 
