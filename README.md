@@ -50,10 +50,12 @@ conda install -c bioconda antismash
 **– BiG-SCAPE:**
 
 ```
-Download pFAM here
+Download and parse the pFAM database:
 wget http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam35.0/Pfam-A.hmm.gz
+gzip -d Pfam-A.hmm.gz
+hmmpress Pfam-A.hmm
 
-Install software
+Install the BiG-SCAPE software:
 conda create -n bigscape -c bioconda bigscape
 ```
 
@@ -79,19 +81,11 @@ https://gnps.ucsd.edu/ProteoSAFe/status.jsp?task=b915d1f78c364bf4be9900047760d95
 **5) Run BiG-SCAPE for the antiSMASH BGCs (including from your samples) and concatenate outputs for all classes.**
 
 ```
-A) Download and parse the pFAM database:
-wget http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam35.0/Pfam-A.hmm.gz
-gzip -d Pfam-A.hmm.gz
-hmmpress Pfam-A.hmm
-
-B) Install the BiG-SCAPE software:
-conda create -n bigscape -c bioconda bigscape
-
-C) Run BiG-SCAPE:
+A) Run BiG-SCAPE:
 conda activate bigscape
 bigscape.py --pfam_dir /path/to/pfam_files/ -i /path/to/antismash/ \ -o /path/to/bigscape_outputs_220603_1791samples/ -c 8 --include_singletons --mibig
 
-D) Concatenate outputs:
+B) Concatenate outputs:
 sh concat_bigscape.sh /path/to/bigscape_output/ 2023-11-11_11-11-11_hybrids_glocal/
 ```
 
