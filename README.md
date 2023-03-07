@@ -22,6 +22,41 @@ https://www.tfleao.com/npomix1
 
 ## Quick tutorial:
 
+### Installing packages and softwares (using a bash terminal):
+
+**– Anaconda**
+```
+We suggest using the command-line install according to https://docs.anaconda.com/anaconda/install/mac-os/.
+```
+
+**– Conda packages:**
+
+```
+conda install -c bioconda pyteomics
+conda install -c anaconda requests
+conda install -c anaconda networkx
+conda install -c trentonoliphant datetime
+conda install -c conda-forge biopython
+conda install -c anaconda scikit-learn
+```
+
+
+**- antiSMASH:** (offline, we recommend the online version, it has great interface)
+
+```
+conda install -c bioconda antismash
+```
+
+**– BiG-SCAPE:**
+
+```
+Download pFAM here
+wget http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam35.0/Pfam-A.hmm.gz
+
+Install software
+conda create -n bigscape -c bioconda bigscape
+```
+
 ### Instructions:
 
 **1) Clone the GitHub repository:**
