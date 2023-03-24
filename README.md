@@ -35,7 +35,7 @@ We suggest using the command-line install according to https://docs.anaconda.com
 conda install -c bioconda pyteomics
 conda install -c anaconda requests
 conda install -c anaconda networkx
-conda install -c trentonoliphant datetime
+conda install datetime
 conda install -c conda-forge biopython
 conda install -c anaconda scikit-learn
 ```
@@ -53,6 +53,7 @@ conda install -c bioconda antismash
 Download and parse the pFAM database:
 wget http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam35.0/Pfam-A.hmm.gz
 gzip -d Pfam-A.hmm.gz
+conda install -c bioconda hmmer
 hmmpress Pfam-A.hmm
 
 Install the BiG-SCAPE software:
