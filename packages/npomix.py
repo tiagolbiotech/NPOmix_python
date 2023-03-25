@@ -251,7 +251,7 @@ def main_get_families(input_file):
     gcf_dict = get_family_dict(C,bigscape_df,gcf_dict,'Clustername_1','Clustername_2','Raw_distance')
     return bigscape_df,gcf_dict
 
-def get_bigscape_df(ena_df_file,input_bigscape_net):
+def parse_bigscape_df(ena_df_file,input_bigscape_net):
     bigscape_df,bigscape_dict = main_get_families(input_bigscape_net)
     bigscape_df["Raw_distance"] = 1-bigscape_df["Raw_distance"]
     return bigscape_df,bigscape_dict
@@ -495,7 +495,7 @@ def run_main(mgf_folder,merged_ispec_mat_file,LCMS_folder,ena_df_file,input_bigs
         merged_ispec_mat.to_csv(merged_ispec_mat_file,sep="\t",index_label=False)
     merged_ispec_mat = renaming_merged_ispec_mat(ena_df_file,merged_ispec_mat)
     print('Obtaining BiG-SCAPE dataframe and BiG-SCAPE dictionary')
-    bigscape_df,bigscape_dict = get_bigscape_df(ena_df_file,input_bigscape_net)
+    bigscape_df,bigscape_dict = parse_bigscape_df(ena_df_file,input_bigscape_net)
     bigscape_df,bigscape_dict2 = rename_bigscape_df(antismash_folder,bigscape_df,bigscape_dict)
     save_bigscape_dict(bigscape_dict,results_folder)
     save_bigscape_dict2(bigscape_dict2,results_folder)
