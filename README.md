@@ -25,8 +25,14 @@ https://www.tfleao.com/npomix1
 ### Installing packages and softwares (using a bash terminal):
 
 **– Anaconda**
+We suggest using the command-line install according to https://docs.anaconda.com/anaconda/install/. For example:
+
 ```
-We suggest using the command-line install according to https://docs.anaconda.com/anaconda/install/mac-os/.
+For macOSX, you can use the following commands in the terminal window.
+
+cd ~/Downloads/
+wget https://repo.anaconda.com/archive/Anaconda3-2023.03-MacOSX-x86_64.sh
+bash Anaconda3-2023.03-MacOSX-x86_64.sh
 ```
 
 **– Conda packages:**
