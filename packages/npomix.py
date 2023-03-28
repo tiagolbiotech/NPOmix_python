@@ -200,7 +200,7 @@ def renaming_merged_ispec_mat(ena_df_file,merged_ispec_mat):
 
 ### obtaining bigscape dataframe and bigscape dictionary
 
-def parse_bigscape_df(input_file):
+def get_bigscape_df(input_file):
     bigscape_df = pd.read_csv(input_file,sep='\t')
     bigscape_df.rename(columns=lambda x: re.sub(" ","_",x), inplace=True)
     bigscape_df = bigscape_df[bigscape_df.Clustername_1 != bigscape_df.Clustername_2]
@@ -240,7 +240,7 @@ def get_family_dict(components_list,dataframe,dictionary,column1,column2,column3
     return dictionary
 
 def main_get_families(input_file):
-    bigscape_df = parse_bigscape_df(input_file)
+    bigscape_df = get_bigscape_df(input_file)
     targets_list = np.unique([bigscape_df.Clustername_1,bigscape_df.Clustername_2])
     neighbors_list = []
     for target in targets_list:
