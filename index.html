@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Visualizacion de Red con Cytoscape.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.18.1/cytoscape.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <div class="top-header text-center">
+      <div class="row">
+        <div class="col col-3 align-top">
+          <img
+            class="NPOmixLogo"
+            src="https://static.wixstatic.com/media/f55b92_c46d052b4c7d4971ab8ce35d0a474873~mv2.png/v1/fill/w_511,h_360,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Screen%20Shot%202021-08-27%20at%2010_59_00%20PM.png"
+            style="height: 6em"
+            alt="NPOmix"
+          />
+        </div>
+        <div class="col col-6">
+          <p style="font-size: 1.5em; font-weight: bold">
+            Natural Products Mixed Omics (NPOmix)
+          </p>
+          <p style="font-size: 1em">Version 1.0</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttonsInputs">
+      <div class="row justify-content-between">
+        <div class="col col-4" style="margin-left: 14%">
+          <input type="file" id="fileInput" />
+          <button onclick="handleFile()">Cargar network</button>
+        </div>
+        <!-- <div class="col col-4">
+          <input type="text" id="searchInput" placeholder="Buscar nodo" />
+        </div> -->
+      </div>
+    </div>
+    <!-- <input type="text" id="search-input" placeholder="Buscar nodo">
+<button id="search-button">Buscar</button> -->
+
+    <div class="row">
+      <div class="col col-2 my-3 mx-3">
+        <table class="color-table">
+          <tr>
+            <td><label for="colorNRPS">NRPS:</label></td>
+            <td>
+              <input
+                type="color"
+                id="colorNRPS"
+                name="colorNRPS"
+                value="#cdedfc"
+                class="color-square"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="colorPKSI">PKS:</label></td>
+            <td>
+              <input
+                type="color"
+                id="colorPKSI"
+                name="colorPKSI"
+                value="#bdf5a9"
+                class="color-square"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="colorPKSothers">PKSOther:</label></td>
+            <td>
+              <input
+                type="color"
+                id="colorPKSothers"
+                name="colorPKSothers"
+                value="#75946d"
+                class="color-square"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="colorHybrids">Hybrids:</label></td>
+            <td>
+              <input
+                type="color"
+                id="colorHybrids"
+                name="colorHybrids"
+                value="#94ffe8"
+                class="color-square"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="colorRiPPs">RiPPs:</label></td>
+            <td>
+              <input
+                type="color"
+                id="colorRiPPs"
+                name="colorRiPPs"
+                value="#f6bfd7"
+                class="color-square"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="colorTerpene">Terpene:</label></td>
+            <td>
+              <input
+                type="color"
+                id="colorTerpene"
+                name="colorTerpene"
+                value="#d9d2e9"
+                class="color-square"
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="colorOthers">Others:</label></td>
+            <td>
+              <input
+                type="color"
+                id="colorOthers"
+                name="colorOthers"
+                value="#c9c9c9"
+                class="color-square"
+              />
+            </td>
+          </tr>
+        </table>
+        <button class="btn btn-light" onclick="actualizarColores()">
+          Actualizar colores
+        </button>
+      </div>
+      <div class="col col-8" id="cy"></div>
+    </div>
+
+    <script src="assets/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
